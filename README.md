@@ -1,15 +1,14 @@
-#### 静态开发(H5+C3) -> gulp
+#### 静态页面(H5+C3) -> gulp
 #### vue/react -> webpack
 
 ---
 webpack
-1. 打包工具(模块打包器)
-2. 前端必不可少工具
+- 打包工具(模块打包器)
 
 webpack作用:
-1. 打包  (把多个文件打包成一个js文件， 减小服务器压力、带宽)
-2. 转化  (比如less、sass、ts)   需要loader
-3. 优化  (SPA越来越盛行，前端项目复杂度高， webpack可以对项目进行优化)
+- 打包  (把多个文件打包成一个js文件， 减小服务器压力、带宽)
+- 转化  (比如less、sass、ts)   需要loader
+- 优化  (SPA越来越盛行，前端项目复杂度高， webpack可以对项目进行优化)
 
 ---
 webpack构成:
@@ -23,24 +22,18 @@ webpack构成:
 ---
 安装webpack
 ```
-yarn global add webpack-cli
+yarn global add webpack webpack-cli
 webpack -v
 ```
 
 ---
-package.json
+运行webpack
 ```
-yarn init -y
-```
-
----
-跑一跑webpack
-```
-webpack src\index.js --output dist/bundle.js
+webpack src/index.js --output dist/bundle.js
 ```
 
 ---
-配置文件 webpack.config.js    
+默认配置文件 webpack.config.js    
 ```
 module.exports={
     //入口配置
@@ -84,8 +77,6 @@ module.exports={
     }
 };
 ```
-
-配置文件名称不一定得叫 webpack.config.js
 
 自定义配置文件名 wb.config.js
 
@@ -179,9 +170,9 @@ html-webpack-plugin:
         多页面分别引入自己的js:
             chunks:['index']
 
-	https://www.npmjs.com/package/html-webpack-plugin#
+	https://www.npmjs.com/package/html-webpack-plugin
 ---
-删除 dist 目录
+删除打包目录
 
 	1. 下载
 		yarn add clean-webpack-plugin -D
@@ -197,11 +188,11 @@ devServer
 	2. 使用
 		devServer:{
             //设置服务器访问的基本目录
-            contentBase:path.resolve(__dirname, 'dist'),
-            //服务器ip地址， localhost
-            host:'localhost',
+            contentBase: path.resolve(__dirname, 'dist'),
+            //服务器ip地址
+            host: 'localhost',
             //设置端口
-            port:8090
+            port: 8080
         }
 
 	此时 pakcage.json:
@@ -223,6 +214,7 @@ devServer
 
 ---
 处理css文件
+
 	yarn add style-loader css-loader -D
 
 	配置:
@@ -254,7 +246,7 @@ devServer
 		b). const uglify = require('xxx);
 		c). new ugliufy()
 ---
-图片根据limit转换 base64
+图片转换 base64
 
 	1. yarn add file-loader url-loader -D
 	2. 配置
@@ -271,7 +263,7 @@ devServer
 ---
 分离CSS:
 
-	1. yarn add extract-text-webpack-plugin -D    webpack3.x
+	1. yarn add extract-text-webpack-plugin -D  webpack3.x
 	    yarn add extract-text-webpack-plugin@next -D  webpack4.x
 	2. 在plugins里面应用
 		new ExtractTextPlugin(提取出去的路径)
@@ -327,6 +319,7 @@ sass:
     }
 ---
 自动处理前缀:
+
 	postCss	预处理器
 	
 	transform:
@@ -371,7 +364,7 @@ sass:
             paths: glob.sync(path.join(__dirname, 'src/*.html'))
         })
 ---
-调试:
+开启调试:
 
 	webpack4.x 开启调试:
 		--mode development
@@ -429,7 +422,7 @@ https://webpack.js.org/plugins/copy-webpack-plugin/
 ---
 使用第三库:
 
-	1. 直接npm下载，然后引入（可以使用，但不是很推荐）
+	1. 直接npm下载，然后引入
 	
 		yarn add jquery
 
@@ -451,5 +444,5 @@ https://webpack.js.org/plugins/copy-webpack-plugin/
 			})
 
 	通过ProvidePlugin和 import直接引入区别:
-		1. import $ ...，引入之后，无论你在代码中是否使用jquery，打包时都会打进去，这样会产生大量冗余js代码
-		2. ProvidePlugin 只有你使用到该库，才会打包
+	  1. import $ ...，引入之后，无论你在代码中是否使用jquery，打包时都会打进去，这样会产生大量冗余js代码
+	  2. ProvidePlugin 只有你使用到该库，才会打包
