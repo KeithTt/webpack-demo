@@ -85,9 +85,9 @@ module.exports={
 npm scripts:
 
     "scripts": {
-        "build": "webpack --config wb.config.js",
-        "dev": "xxx"
-      }
+      "build": "node --trace-deprecation ./node_modules/.bin/webpack --mode development",
+      "serve": "webpack-dev-server --mode development"
+    }
 
 ---
 webpack4.x 实现所谓的0配置

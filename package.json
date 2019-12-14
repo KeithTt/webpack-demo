@@ -1,7 +1,7 @@
 {
   "name": "webpack-demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "webpack-demo",
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode development",
@@ -34,6 +34,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.13.0",
     "postcss-loader": "^3.0.0",
+    "purgecss-webpack-plugin": "^1.6.0",
     "purify-css": "^1.2.5",
     "purifycss-webpack": "^0.7.0",
     "react": "^16.12.0",

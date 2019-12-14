@@ -1,10 +1,12 @@
 body {
-    background: url(../images/404.jpg) right top repeat-y;
+    background: rgb(185, 115, 218) repeat-y right top;
+    background-image: url('../images/bg.png');
 }
 
 #root {
-    color: yellowgreen;
+    background-color: yellowgreen;
     transform: rotate(45deg);
+    height: 50px;
 }
 
 .a {

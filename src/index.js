@@ -18,7 +18,7 @@ import './less/index.less'
 //     background:'yellow'
 // })
 
-import imgSrc from './images/404.jpg';
+import imgSrc from './images/bg.png';
 
 let oImg = new Image();
 

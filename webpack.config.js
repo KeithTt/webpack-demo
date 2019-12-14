@@ -7,7 +7,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // 生成 html 页面
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');  // 抽取 CSS
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const PurifyCssWebpack = require('purifycss-webpack');  // 去除冗余 CSS
+// const PurifyCssWebpack = require('purifycss-webpack');  // 去除冗余 CSS
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 
 const glob = require('glob'); // 文件路径匹配
 const CopyWebpackPlugin = require('copy-webpack-plugin'); // 静态资源拷贝
@@ -41,9 +42,9 @@ module.exports = {
                         },
                     },
                     'css-loader',
+                    'postcss-loader',
                     'sass-loader',
                     'less-loader',
-                    'postcss-loader',
                 ],
             },
             {
@@ -52,7 +53,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif)$/i,
+                test: /\.(png|jpg|gif|svg)$/i,
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -75,7 +76,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(), // 删除打包目录
         //new Uglify(),
-        // new webpack.HotModuleReplacementPlugin(), // 热更新
+        new webpack.HotModuleReplacementPlugin(), // 热更新
         new HtmlWebpackPlugin({
             // minify: {
             //   collapseWhitespace: true, // 压缩空白
@@ -88,8 +89,11 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: './css/index.css' //css分离打包之后输出的路径
         }),
-        new PurifyCssWebpack({
-            paths: glob.sync(path.join(__dirname, 'src/*.html')) // 去除冗余css
+        // new PurifyCssWebpack({
+        //     paths: glob.sync(path.join(__dirname, 'src/*.html')) // 去除冗余css
+        // }),
+        new PurgecssPlugin({
+            paths: glob.sync(path.join(__dirname, 'src/*.html'), {nodir: true})
         }),
         new CopyWebpackPlugin([{
             from: path.resolve(__dirname, 'src/assets'), // 静态文件拷贝

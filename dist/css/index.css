@@ -1,24 +1,22 @@
 body {
-  background: url([object Module]) right top repeat-y;
-}
+  background: #b973da repeat-y right top;
+  background-image: url([object Module]); }
 
 #root {
-  color: yellowgreen;
+  background-color: yellowgreen;
   -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
+          transform: rotate(45deg);
+  height: 50px; }
 
 .width {
-  width: 100px;
-}
+  width: 100px; }
 
 #div1 {
-  color: red;
-}
+  color: red; }
 
 #div1 ul li {
   list-style: none;
   height: 30px;
   line-height: 30px;
-  border-bottom: 1px dashed #000;
-}
+  border-bottom: 1px dashed #000; }
+
