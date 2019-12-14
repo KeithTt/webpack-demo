@@ -1,0 +1,24 @@
+body {
+    background: url(../images/404.jpg) right top repeat-y;
+}
+
+#root {
+    color: yellowgreen;
+    transform: rotate(45deg);
+}
+
+.a {
+    color: #ccc;
+}
+
+.b {
+    width: 100px;
+}
+
+.fl {
+    float: left;
+}
+
+.width {
+    width: 100px;
+}

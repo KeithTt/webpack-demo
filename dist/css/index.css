@@ -1,0 +1,24 @@
+body {
+  background: url([object Module]) right top repeat-y;
+}
+
+#root {
+  color: yellowgreen;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.width {
+  width: 100px;
+}
+
+#div1 {
+  color: red;
+}
+
+#div1 ul li {
+  list-style: none;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px dashed #000;
+}
