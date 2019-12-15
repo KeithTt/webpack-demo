@@ -101,11 +101,10 @@ eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/
 /*!***************************!*\
   !*** ./src/images/bg.png ***!
   \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"images/df28fc71140178f6d762c6612af937c9.png\");\n\n//# sourceURL=webpack:///./src/images/bg.png?");
+eval("module.exports = __webpack_require__.p + \"images/df28fc71140178f6d762c6612af937c9.png\";\n\n//# sourceURL=webpack:///./src/images/bg.png?");
 
 /***/ }),
 

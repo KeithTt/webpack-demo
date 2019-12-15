@@ -1,6 +1,5 @@
 body {
-    background: rgb(185, 115, 218) repeat-y right top;
-    background-image: url('../images/bg.png');
+    background: rgb(185, 115, 218) url('../images/bg.png') repeat-y right top;
 }
 
 #root {
