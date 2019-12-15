@@ -15,7 +15,7 @@ const PurgecssPlugin = require('purgecss-webpack-plugin');
 const glob = require('glob'); // 文件路径匹配
 const CopyWebpackPlugin = require('copy-webpack-plugin'); // 静态资源拷贝
 
-const {CleanWebpackPlugin} = require('clean-webpack-plugin'); // 删除打包目录
+// const {CleanWebpackPlugin} = require('clean-webpack-plugin'); // 删除打包目录
 
 // const rulesConfig = require('./webpack.rules.js'); // 抽取 loader rules
 
@@ -76,7 +76,7 @@ module.exports = {
     },
     //devtool: 'source-map', // 启用 sourcemap
     plugins: [
-        new CleanWebpackPlugin(), // 删除打包目录
+        // new CleanWebpackPlugin(), // 删除打包目录
         //new Uglify(),
         // new webpack.HotModuleReplacementPlugin(), // 热更新
         new HtmlWebpackPlugin({
