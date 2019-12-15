@@ -6,8 +6,8 @@
 //     document.querySelector('#root')
 // )
 
-import './css/index.css'
-import './less/index.less'
+import './css/index.css';
+import './less/index.less';
 
 // import './sass/index.scss'
 //import $ from 'jquery'

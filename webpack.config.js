@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // 生成 html 页面
 // const Uglify = require('uglifyjs-webpack-plugin');  // 压缩 JS
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');  // 抽取 CSS
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const TerserJSPlugin = require('terser-webpack-plugin');
+// const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // const PurifyCssWebpack = require('purifycss-webpack');  // 去除冗余 CSS
 const PurgecssPlugin = require('purgecss-webpack-plugin');
@@ -76,9 +78,9 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(), // 删除打包目录
         //new Uglify(),
-        new webpack.HotModuleReplacementPlugin(), // 热更新
+        // new webpack.HotModuleReplacementPlugin(), // 热更新
         new HtmlWebpackPlugin({
-            // minify: {
+            // minify: { // 压缩 html
             //   collapseWhitespace: true, // 压缩空白
             //   removeAttributeQuotes: true // 删除属性引号
             // },
@@ -88,6 +90,8 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: './css/index.css' //css分离打包之后输出的路径
+            // filename: '[name].css',
+            // chunkFilename: '[id].css',
         }),
         // new PurifyCssWebpack({
         //     paths: glob.sync(path.join(__dirname, 'src/*.html')) // 去除冗余css
@@ -103,5 +107,18 @@ module.exports = {
             $: 'jquery',
             _map: ['lodash', 'map']
         })
-    ]
+    ],
+    // optimization: {
+    //     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    //     splitChunks: {
+    //         cacheGroups: {
+    //             styles: {
+    //                 name: 'styles',
+    //                 test: /\.css$/,
+    //                 chunks: 'all',
+    //                 enforce: true,
+    //             },
+    //         },
+    //     },
+    // },
 };
