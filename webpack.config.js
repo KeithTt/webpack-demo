@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
+const webpack = require('webpack'); // to access built-in plugins
 
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 生成 html 页面
 
@@ -32,6 +32,12 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
+    watch: true, // 监听代码变化，自动打包
+    watchOptions: {
+        poll: 1000,
+        aggregateTimeout: 500, // 防抖
+        ignored: /node_modules/
+    },
     module: {
         rules: [
             {
@@ -59,7 +65,7 @@ module.exports = {
                 use: [{
                     loader: 'url-loader',
                     options: {
-                        limit: 50, // 超过限制转换成 base64
+                        limit: 80000, // return a DataURL if the file is smaller than a byte limit
                         outputPath: 'images', // 图片打包之后输出的目录
                         fallback: 'file-loader',
                         esModule: false, // 解决ESmodule语法不识别问题
