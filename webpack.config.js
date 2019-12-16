@@ -68,7 +68,7 @@ module.exports = {
                         limit: 80000, // return a DataURL if the file is smaller than a byte limit
                         outputPath: 'images', // 图片打包之后输出的目录
                         fallback: 'file-loader',
-                        esModule: false, // 解决ESmodule语法不识别问题
+                        esModule: false, // 启用CommonJS模块语法，解决ESmodule语法不识别问题
                     }
                 }]
             }
