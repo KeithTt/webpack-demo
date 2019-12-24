@@ -32,12 +32,12 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
-    watch: true, // 监听代码变化，自动打包
-    watchOptions: {
-        poll: 1000,
-        aggregateTimeout: 500, // 防抖
-        ignored: /node_modules/
-    },
+    // watch: true, // 监听代码变化，自动打包
+    // watchOptions: {
+    //     poll: 1000,
+    //     aggregateTimeout: 500, // 防抖
+    //     ignored: /node_modules/
+    // },
     module: {
         rules: [
             {

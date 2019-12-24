@@ -2,7 +2,7 @@
 #### vue/react -> webpack
 
 ---
-webpack
+[webpack](https://www.webpackjs.com/)
 - 打包工具(模块打包器)
 
 webpack作用:
@@ -11,57 +11,55 @@ webpack作用:
 - 优化  (SPA越来越盛行，前端项目复杂度高， webpack可以对项目进行优化)
 
 ---
-webpack构成:
-1. 入口  entry
-2. 出口	output
-3. loaders  转化器
-4. plugins  插件
-5. devServer 开发服务器
-6. mode
+webpack构成
+
+    1. 入口  entry
+    2. 出口	output
+    3. loaders  转化器
+    4. plugins  插件
+    5. devServer 开发服务器
+    6. mode
 
 ---
 安装webpack
-```
-yarn global add webpack webpack-cli
-webpack -v
-```
+
+    yarn global add webpack webpack-cli
+    webpack -v
 
 ---
 运行webpack
-```
-webpack src/index.js --output dist/bundle.js
-```
+
+    webpack src/index.js --output dist/bundle.js
 
 ---
 默认配置文件 webpack.config.js    
-```
-module.exports={
-    //入口配置
-    entry:{},
-    //出口配置
-    output:{},
-    //module.rules
-    //loaders
-    module:{},
-    //插件
-    plugins:[],
-    //开发服务器
-    devServer:{}
-};
-```
-```
-module.exports={
-    //入口配置
-    entry:{
-        aaa: './src/index.js'
-    },
-    //出口配置
-    output:{
-        path: __dirname + '/dist', // path必须是绝对路径
-        filename: 'bundle.js'
-    }
-};
-```
+
+    module.exports={
+        //入口配置
+        entry:{},
+        //出口配置
+        output:{},
+        //module.rules
+        //loaders
+        module:{},
+        //插件
+        plugins:[],
+        //开发服务器
+        devServer:{}
+    };
+    
+    module.exports={
+        //入口配置
+        entry:{
+            index: './src/index.js'
+        },
+        //出口配置
+        output:{
+            path: __dirname + '/dist', // path必须是绝对路径
+            filename: 'bundle.js'
+        }
+    };
+
 ```
 const path = require('path');
 
@@ -90,7 +88,7 @@ npm scripts:
     }
 
 ---
-webpack4.x 实现所谓的0配置
+webpack4.x 实现所谓的0配置 (另外可参考 [parcel](https://parceljs.org/))
 
 mode:
 
@@ -125,10 +123,10 @@ mode:
 	};
 ---
 
-html-webpack-plugin:
+[html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin):
 
 	依赖webpack、webpack-cli
-	生成html页面
+	用于生成html页面
 
 	1. 安装
 		npm i html-webpack-plugin -D
@@ -170,9 +168,8 @@ html-webpack-plugin:
         多页面分别引入自己的js:
             chunks:['index']
 
-	https://www.npmjs.com/package/html-webpack-plugin
 ---
-删除打包目录
+删除打包目录 [clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
 
 	1. 下载
 		yarn add clean-webpack-plugin -D
@@ -181,7 +178,7 @@ html-webpack-plugin:
 	3. 使用:
 		new CleanWebpackPlugin()
 ---
-devServer
+[devServer](https://webpack.js.org/configuration/dev-server/)
 
 	1. 下载
 		yarn add webpack-dev-server -D
@@ -209,8 +206,6 @@ devServer
 
 		开启:
 			new webpack.HotModuleReplacementPlugin()
-
-	https://webpack.js.org/configuration/dev-server/
 
 ---
 处理css文件
@@ -262,6 +257,8 @@ devServer
         }
 ---
 分离CSS:
+
+[extract-text-webpack-plugin](https://www.npmjs.com/package/extract-text-webpack-plugin) 已废弃，使用 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) 替代
 
 	1. yarn add extract-text-webpack-plugin -D  webpack3.x
 	    yarn add extract-text-webpack-plugin@next -D  webpack4.x
@@ -320,7 +317,7 @@ sass:
 ---
 自动处理前缀:
 
-	postCss	预处理器
+	postCss	后处理器
 	
 	transform:
     -webkit-transform:
@@ -353,6 +350,10 @@ sass:
 ---
 消除冗余css代码:
 
+经测试，[purifycss-webpack](https://www.npmjs.com/package/purifycss-webpack) 已出现 API 不兼容的告警
+
+使用 [purgecss-webpack-plugin](https://www.npmjs.com/package/purgecss-webpack-plugin) 替代
+
 	1. 安装
 		yarn add purifycss-webpack purify-css -D
 	2. 引入
@@ -364,7 +365,7 @@ sass:
             paths: glob.sync(path.join(__dirname, 'src/*.html'))
         })
 ---
-开启调试:
+开启 sourceMap:
 
 	webpack4.x 开启调试:
 		--mode development
@@ -374,7 +375,7 @@ sass:
 		devtool: 'source-map',
 
 ---
-babel:
+[babel](https://github.com/babel/babel):
 
 	- babel用来编译js
 	- ESnext
@@ -403,7 +404,7 @@ babel:
 
 	const json = require('./xxx.json')
 ---
-静态资源输出:
+静态资源输出 [copy-webpack-plugin](https://www.npmjs.com/package/copy-webpack-plugin) :
 
 	1. 下载
 		yarn add copy-webpack-plugin -D
@@ -416,8 +417,6 @@ babel:
 				to: './public'
 			}])
 		]
-
-https://webpack.js.org/plugins/copy-webpack-plugin/
 
 ---
 使用第三库:
