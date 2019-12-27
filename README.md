@@ -125,7 +125,6 @@ mode:
 
 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin):
 
-	依赖webpack、webpack-cli
 	用于生成html页面
 
 	1. 安装
@@ -133,40 +132,43 @@ mode:
 	2. 引入
 		const HtmlWebpackPlugin = require('html-webpack-plugin');
 	3. 使用
-		plugins:[
-			new HtmlWebpackPlugin()
-		]
+        plugins:[
+          new HtmlWebpackPlugin()
+        ]
 
-    html-webpack-plugin:
-        模板:
-            new HtmlWebpackPlugin({
-                template:'模板地址' // By default it will use src/index.ejs if it exists.
-            })
-        页面标题:
-            new HtmlWebpackPlugin({
-                title:'xxxxx',
-                template:'模板地址'
-            })
-        消除缓存:
-            new HtmlWebpackPlugin({
-                hash:true,
-                title:'xxxxx',
-                template:'模板地址'
-            })
-        压缩html:
-            new HtmlWebpackPlugin({
-                minify:{
-                    collapseWhitespace: true,  // 压缩空白
-                    removeAttributeQuotes: true  // 删除属性引号
-                },
-                hash:true,
-                title:'I Love China',
-                template:'./src/index.html'
-            })
-        生成多个html页面:
-            filename:'xxx'
-        多页面分别引入自己的js:
-            chunks:['index']
+
+    new HtmlWebpackPlugin({
+      template:'模板地址' // By default it will use src/index.ejs if it exists.
+    })
+        
+
+
+生成多个html页面, 多页面分别引入自己的js:
+      
+```
+module.exports = {
+  entry: {
+    main: path.resolve(__dirname, '../src/main.js'),
+    header: path.resolve(__dirname, '../src/header.js')
+  },
+  output: {
+    filename: '[name].[hash:8].js', // 打包后的文件名称
+    path: path.resolve(__dirname, '../dist')  // 打包后的目录
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/index.html'),
+      filename: 'index.html',
+      chunks: ['main'] // 与入口文件对应的模块名
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/header.html'),
+      filename: 'header.html',
+      chunks: ['header'] // 与入口文件对应的模块名
+    }),
+  ]
+}
+```
 
 ---
 删除打包目录 [clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)
@@ -192,7 +194,7 @@ mode:
 	此时 pakcage.json:
 		"scripts": {
 			"build": "webpack --mode development",
-			"dev":"webpack-dev-server --mode development"
+			"dev": "webpack-dev-server --mode development"
 		}
 
 	自动打开浏览器:
@@ -239,17 +241,21 @@ REACT 热更新
 ---
 处理 CSS 文件
 
+[style-loader](https://webpack.js.org/loaders/style-loader/)
+
+Automatically injects styles into the DOM using multiple `<style></style>`. It is default behaviour.
+
 	yarn add style-loader css-loader -D
 
 	配置:
-		module:{
-			rules:[
-				{
-					test:/\.css$/,
-					use:['style-loader','css-loader']
-				}
-			]
-		}
+        module: {
+          rules: [
+            {
+              test: /\.css$/i,
+              use: ['style-loader', 'css-loader'],
+            },
+          ],
+        }
 
 	loader 的三种写法:
 		1. use:['xxx-loader','xxx-loader']
@@ -263,6 +269,7 @@ REACT 热更新
 
 	1. webpack4.x
 		--mode production
+		
 	2. 之前版本
 		uglifyjs-webpack-plugin
 
@@ -270,36 +277,38 @@ REACT 热更新
 		b). const uglify = require('xxx);
 		c). new ugliufy()
 ---
-图片转换 base64
+url-loader 将图片转换成 BASE64
 
 	1. yarn add file-loader url-loader -D
+	
 	2. 配置
 		{
-        test:/\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif)$/,
         use:[{
-            loader:'url-loader',
+            loader: 'url-loader',
             options:{
-                  limit:50，
-                  outputPath:'images'
+                  limit: 50，
+                  outputPath: 'images'
                 }
             }]
         }
 ---
 分离CSS:
 
-webpack 4.0以前，我们通过 [extract-text-webpack-plugin](https://www.npmjs.com/package/extract-text-webpack-plugin) 插件，把css样式从js文件中提取到单独的css文件中。
+webpack4.0以前，我们通过 [extract-text-webpack-plugin](https://www.npmjs.com/package/extract-text-webpack-plugin) 插件，把css样式从js文件中提取到单独的css文件中。
 
 webpack4.0以后，官方推荐使用 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) 插件来打包css文件。
 
 	1. yarn add extract-text-webpack-plugin -D  webpack3.x
 	    yarn add extract-text-webpack-plugin@next -D  webpack4.x
+	
 	2. 在plugins里面应用
 		new ExtractTextPlugin(提取出去的路径)
 
-		use:ExtractTextPlugin.extract({
-		    fallback:'style-loader',
-		    use:'css-loader',
-		    publicPath:'../' // 解决css背景图，路径问题
+		use: ExtractTextPlugin.extract({
+		    fallback: 'style-loader',
+		    use: 'css-loader',
+		    publicPath: '../' // 解决css背景图，路径问题
 		})
 
     mini-css-extract-plugin:
@@ -310,19 +319,20 @@ webpack4.0以后，官方推荐使用 [mini-css-extract-plugin](https://www.npmj
 less:
 
 	1. yarn add less less-loader -D
+	
 	2. {
-		test:/\.less$/,
-		use:['style-loader','css-loader','less-loader']
+		test: /\.less$/,
+		use: ['style-loader', 'css-loader', 'less-loader']
 	}
 
 分离less:
 
 	{
-        test:/\.less$/,
-        //use:['style-loader','css-loader','less-loader']
-        use:ExtractTextPlugin.extract({
-            fallback:'style-loader',
-            use:['css-loader','less-loader']
+        test: /\.less$/,
+        //use: ['style-loader', 'css-loader', 'less-loader']
+        use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'less-loader']
         })
     }
 ---
@@ -332,23 +342,23 @@ sass:
 
 	配置:
 	{
-        test:/\.(sass|scss)$/,
-        use:['style-loader','css-loader','sass-loader']
+        test: /\.(sass|scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
     }
 
 分离sass:
 
 	{
-        test:/\.(sass|scss)$/,
-        use:ExtractTextPlugin.extract({
-            fallback:'style-loader',
-            use:['css-loader','sass-loader']
+        test: /\.(sass|scss)$/,
+        use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader','sass-loader']
         })
     }
 ---
 为 css 添加浏览器前缀:
 
-	postCss	后处理器
+	postcss	后处理器
 	
 	transform:
     -webkit-transform:
@@ -359,27 +369,27 @@ sass:
 2. 准备 postcss.config.js
 
 	module.exports ={
-		plugins:[
+		plugins: [
 			require('autoprefixer')
 		]
 	};
 
 3. 配置loader
 	use:[
-        {loader:'style-loader'},
-        {loader:'css-loader'},
-        {loader:'postcss-loader'}
-    ]
+            {loader: 'style-loader'},
+            {loader: 'css-loader'},
+            {loader: 'postcss-loader'}
+        ]
 
 4. 提取出来
 	use:ExtractTextPlugin.extract({
-        fallback:'style-loader',
-        use:['css-loader','postcss-loader'],
-        publicPath:'../' // 解决css背景图，路径问题
-    })
+            fallback: 'style-loader',
+            use: ['css-loader','postcss-loader'],
+            publicPath: '../' // 解决css背景图，路径问题
+        })
 ```
 ---
-消除冗余css代码:
+去除冗余CSS代码:
 
 经测试，[purifycss-webpack](https://www.npmjs.com/package/purifycss-webpack) 已出现 API 不兼容警告
 
@@ -476,9 +486,8 @@ babel-loader只会将 ES6/7/8语法转换为ES5语法，但是对新api并不会
 		在plugins里面使用:
 
 			new webpack.ProvidePlugin({
-				$:'jquery',
-				lodash:'lodash'
-				....
+				$: 'jquery',
+				_map: ['lodash', 'map']
 			})
 
 	通过ProvidePlugin和 import直接引入区别:

@@ -87,10 +87,10 @@ module.exports = {
             }
         },
     },
-    //devtool: 'source-map', // 启用 sourcemap
+    // devtool: 'source-map', // 启用 sourcemap
     plugins: [
         new CleanWebpackPlugin(), // 删除打包目录
-        //new Uglify(),
+        // new Uglify(),
         // new webpack.HotModuleReplacementPlugin(), // 热更新
         new HtmlWebpackPlugin({
             // minify: { // 压缩 html, production 模式下自动开启压缩
@@ -102,9 +102,9 @@ module.exports = {
             template: './src/index.html'
         }),
         new MiniCssExtractPlugin({
-            filename: './css/index.css' //css分离打包之后输出的路径
-            // filename: '[name].css',
-            // chunkFilename: '[id].css',
+            // filename: './css/index.css' //css分离打包之后输出的路径
+            filename: './css/[name].[hash:8].css',
+            chunkFilename: '[id].css'
         }),
         // new PurifyCssWebpack({
         //     paths: glob.sync(path.join(__dirname, 'src/*.html')) // 去除冗余css
