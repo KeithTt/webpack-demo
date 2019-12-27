@@ -453,7 +453,7 @@ babel-loader只会将 ES6/7/8语法转换为ES5语法，但是对新api并不会
     ]
     
 ---
-静态资源输出 [copy-webpack-plugin](https://www.npmjs.com/package/copy-webpack-plugin) :
+静态资源输出 [copy-webpack-plugin](https://www.npmjs.com/package/copy-webpack-plugin)
 
 	1. 下载
 		yarn add copy-webpack-plugin -D
