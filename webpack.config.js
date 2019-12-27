@@ -30,7 +30,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        filename: '[name].[hash:8].js'
     },
     // watch: true, // 监听代码变化，自动打包
     // watchOptions: {
@@ -53,7 +53,7 @@ module.exports = {
                     'postcss-loader',
                     'sass-loader',
                     'less-loader',
-                ],
+                ], // 从右向左解析原则
             },
             {
                 test: /\.(js|jsx)$/,
@@ -79,7 +79,13 @@ module.exports = {
         host: '0.0.0.0',
         port: 8080,
         open: true,
-        hot: true
+        hot: true, // 开启 模块热更新
+        hotOnly: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8090'
+            }
+        },
     },
     //devtool: 'source-map', // 启用 sourcemap
     plugins: [
@@ -87,12 +93,12 @@ module.exports = {
         //new Uglify(),
         // new webpack.HotModuleReplacementPlugin(), // 热更新
         new HtmlWebpackPlugin({
-            // minify: { // 压缩 html
+            // minify: { // 压缩 html, production 模式下自动开启压缩
             //   collapseWhitespace: true, // 压缩空白
             //   removeAttributeQuotes: true // 删除属性引号
             // },
             hash: true, // 添加 hash 使文件名唯一, 避免缓存
-            title: 'I Love China',
+            title: 'Webpack-Demo',
             template: './src/index.html'
         }),
         new MiniCssExtractPlugin({

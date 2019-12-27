@@ -123,7 +123,7 @@ mode:
 	};
 ---
 
-[html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin):
+[html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin):
 
 	依赖webpack、webpack-cli
 	用于生成html页面
@@ -140,7 +140,7 @@ mode:
     html-webpack-plugin:
         模板:
             new HtmlWebpackPlugin({
-                template:'模板地址'
+                template:'模板地址' // By default it will use src/index.ejs if it exists.
             })
         页面标题:
             new HtmlWebpackPlugin({
@@ -184,12 +184,9 @@ mode:
 		yarn add webpack-dev-server -D
 	2. 使用
 		devServer:{
-            //设置服务器访问的基本目录
-            contentBase: path.resolve(__dirname, 'dist'),
-            //服务器ip地址
-            host: 'localhost',
-            //设置端口
-            port: 8080
+            contentBase: path.resolve(__dirname, 'dist'), // 设置服务器访问的基本目录
+            host: '0.0.0.0', // 服务器ip地址
+            port: 8080 // 设置端口
         }
 
 	此时 pakcage.json:
@@ -201,14 +198,46 @@ mode:
 	自动打开浏览器:
 		open: true
 
-	热更新:
+	模块热更新:
 		hot: true
 
 		开启:
 			new webpack.HotModuleReplacementPlugin()
+			
+		1、保留在完全重新加载页面期间丢失的应用程序状态
+		2、不刷新页面，只更新变更内容
+		3、在源代码中对 CSS/JS 进行修改，会立刻在浏览器中进行更新
+		
+		当代码发生变化，webpack 即会进行编译，并通过 websocket 通知客户端(浏览器)
+		
+	参考：
+	    https://webpack.docschina.org/concepts/hot-module-replacement/
+	    https://webpack.docschina.org/api/hot-module-replacement
+	    
+```
+console.log(module.hot);
+   
+if (module.hot) {
+  module.hot.accept('./library.js', function() {
+    // 使用更新过的 library 模块执行某些操作...
+  });
+}
+```
+
+CSS 热更新
+
+    样式更新比较简单，style-loader 中已经集成实现，直接使用即可
+    
+VUE 热更新
+
+    脚手架中已经集成 https://github.com/vuejs/vue-loader
+    
+REACT 热更新
+
+    脚手架中也有集成 https://github.com/gaearon/react-hot-loader                
 
 ---
-处理css文件
+处理 CSS 文件
 
 	yarn add style-loader css-loader -D
 
@@ -222,7 +251,7 @@ mode:
 			]
 		}
 
-	关于loader的写法:
+	loader 的三种写法:
 		1. use:['xxx-loader','xxx-loader']
 		2. loader:['xxx-loader','xxx-loader']
 		3. use:[
@@ -258,7 +287,9 @@ mode:
 ---
 分离CSS:
 
-[extract-text-webpack-plugin](https://www.npmjs.com/package/extract-text-webpack-plugin) 已废弃，使用 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) 替代
+webpack 4.0以前，我们通过 [extract-text-webpack-plugin](https://www.npmjs.com/package/extract-text-webpack-plugin) 插件，把css样式从js文件中提取到单独的css文件中。
+
+webpack4.0以后，官方推荐使用 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) 插件来打包css文件。
 
 	1. yarn add extract-text-webpack-plugin -D  webpack3.x
 	    yarn add extract-text-webpack-plugin@next -D  webpack4.x
@@ -315,7 +346,7 @@ sass:
         })
     }
 ---
-自动处理前缀:
+为 css 添加浏览器前缀:
 
 	postCss	后处理器
 	
@@ -350,7 +381,7 @@ sass:
 ---
 消除冗余css代码:
 
-经测试，[purifycss-webpack](https://www.npmjs.com/package/purifycss-webpack) 已出现 API 不兼容的告警
+经测试，[purifycss-webpack](https://www.npmjs.com/package/purifycss-webpack) 已出现 API 不兼容警告
 
 使用 [purgecss-webpack-plugin](https://www.npmjs.com/package/purgecss-webpack-plugin) 替代
 
@@ -367,19 +398,14 @@ sass:
 ---
 开启 sourceMap:
 
-	webpack4.x 开启调试:
+	webpack4.x 开启 sourceMap:
 		--mode development
 
-	webpack3.x之前:
-		sourceMap
+	webpack3.x 之前:
 		devtool: 'source-map',
 
 ---
-[babel](https://github.com/babel/babel):
-
-	- babel用来编译js
-	- ESnext
-	- jsx
+用 [babel](https://github.com/babel/babel) 编译 js 和 jsx 文件
 
 	1. 下载
 		yarn add babel-loader babel-core babel-preset-env -D
@@ -394,15 +420,28 @@ sass:
     jsx:
         yarn add babel-preset-react -D
         yarn add react react-dom -D
+        
+babel-loader只会将 ES6/7/8语法转换为ES5语法，但是对新api并不会转换 例如(promise、Generator、Set、Maps、Proxy等)
 
----
-在webpack中使用json:
-	
-	json-loader
+解决 async 不识别问题
+[Uncaught ReferenceError: regeneratorRuntime is not defined](https://segmentfault.com/a/1190000016384693)      
 
-	到webpack.3x版本之后不用，json默认就能识别
-
-	const json = require('./xxx.json')
+    yarn add -D babel-plugin-transform-runtime
+    
+    在 .bablerc 文件中添加
+    
+    "plugins": [
+        [
+            "transform-runtime",
+            {
+                "helpers": false,
+                "polyfill": false,
+                "regenerator": true,
+                "moduleName": "babel-runtime"
+            }
+        ]
+    ]
+    
 ---
 静态资源输出 [copy-webpack-plugin](https://www.npmjs.com/package/copy-webpack-plugin) :
 
