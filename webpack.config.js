@@ -148,6 +148,23 @@ module.exports = {
             new TerserPlugin({
                 cache: true,    // Enable file caching. Default path to cache directory: node_modules/.cache/terser-webpack-plugin
                 parallel: true, // os.cpus().length - 1
+                extractComments: false, // Remove Comments
+                minify: (file, sourceMap) => {
+                    // https://github.com/mishoo/UglifyJS2#minify-options
+                    const uglifyJsOptions = {
+                        compress: {
+                            drop_console: true  // 去除 console
+                        }
+                    };
+
+                    if (sourceMap) {
+                        uglifyJsOptions.sourceMap = {
+                            content: sourceMap,
+                        };
+                    }
+
+                    return require('uglify-js').minify(file, uglifyJsOptions);
+                },
             }),
         ],
     },
