@@ -1,6 +1,6 @@
 const parser = require('@babel/parser');
-const traverse = require('@babel/traverse').default;
-const generator = require('@babel/generator').default;
+const traverse = require('@babel/traverse');
+const generator = require('@babel/generator');
 const t = require('@babel/types');
 
 module.exports = function (source) {

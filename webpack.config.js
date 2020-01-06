@@ -25,6 +25,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin'); // 删除打包目
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const TerserPlugin = require('terser-webpack-plugin');
+const firstPlugin = require('./webpack-firstPlugin.js');
 
 module.exports = {
     //mode: 'development',  // 可以在这里设置环境
@@ -127,7 +128,8 @@ module.exports = {
         new BundleAnalyzerPlugin({
             analyzerHost: '127.0.0.1',
             analyzerPort: 8888
-        })
+        }),
+        new firstPlugin(),
     ],
     // optimization: {
     //     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],

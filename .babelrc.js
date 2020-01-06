@@ -3,10 +3,12 @@ module.exports = {
         "env",
         "react",
         [
-            // 兼容tree-shaking https://babeljs.io/docs/en/next/babel-preset-env.html
+            // 兼容 tree-shaking https://babeljs.io/docs/en/next/babel-preset-env.html
             "@babel/preset-env",
             {
-                "modules": false
+                "modules": false,
+                "useBuiltIns": "usage", // 按需添加 polyfill
+                "corejs": {version: 3, proposals: true}
             }
         ]
     ],
