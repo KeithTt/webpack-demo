@@ -24,6 +24,8 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin'); // 删除打包目
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 module.exports = {
     //mode: 'development',  // 可以在这里设置环境
     entry: {
@@ -140,4 +142,13 @@ module.exports = {
     //         },
     //     },
     // },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                cache: true,    // Enable file caching. Default path to cache directory: node_modules/.cache/terser-webpack-plugin
+                parallel: true, // os.cpus().length - 1
+            }),
+        ],
+    },
 };
