@@ -22,6 +22,8 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin'); // 删除打包目
 // console.log('--------', path.join(__dirname, 'src/index.html'))
 // console.log('--------', path.resolve(__dirname, 'src/index.html'))
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 module.exports = {
     //mode: 'development',  // 可以在这里设置环境
     entry: {
@@ -119,6 +121,10 @@ module.exports = {
         new webpack.ProvidePlugin({ // 导入模块
             $: 'jquery',
             _map: ['lodash', 'map']
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerHost: '127.0.0.1',
+            analyzerPort: 8888
         })
     ],
     // optimization: {

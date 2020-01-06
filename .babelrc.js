@@ -1,7 +1,14 @@
-{
+module.exports = {
     "presets": [
         "env",
-        "react"
+        "react",
+        [
+            // 兼容tree-shaking https://babeljs.io/docs/en/next/babel-preset-env.html
+            "@babel/preset-env",
+            {
+                "modules": false
+            }
+        ]
     ],
     "plugins": [
         [
@@ -14,4 +21,4 @@
             }
         ]
     ]
-}
+};
