@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode development",
+    "trace": "node --trace-deprecation ./node_modules/.bin/webpack --mode development",
     "serve": "webpack-dev-server --mode development",
     "analyz": "npm_config_report=true npm run build"
   },

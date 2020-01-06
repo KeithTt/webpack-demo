@@ -129,7 +129,7 @@ module.exports = {
             analyzerHost: '127.0.0.1',
             analyzerPort: 8888
         }),
-        new firstPlugin(),
+        // new firstPlugin(),
     ],
     // optimization: {
     //     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
