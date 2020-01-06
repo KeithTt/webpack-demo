@@ -6,7 +6,9 @@ module.exports = {
             // 兼容tree-shaking https://babeljs.io/docs/en/next/babel-preset-env.html
             "@babel/preset-env",
             {
-                "modules": false
+                "modules": false,
+                "useBuiltIns": "usage",
+                "corejs": {version: 3, proposals: true}
             }
         ]
     ],
